@@ -37,7 +37,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm install
-          npm install -D vite tailwindcss postcss autoprefixer
+          npm install -D vite tailwindcss@3 postcss autoprefixer
 
       # 3. Der aggressive Build: Wir ignorieren package.json Skripte
       # Wir zwingen Output in 'dist' und ignorieren TS-Fehler

@@ -43,7 +43,7 @@ jobs:
       # Wir zwingen Output in 'dist' und ignorieren TS-Fehler
       - name: Force Build
         run: |
-          npx vite build --outDir dist --emptyOutDir
+          npx vite build --base=/DesignMethodologiesCode/ --outDir dist --emptyOutDir
           touch dist/.nojekyll
 
       - name: Setup Pages

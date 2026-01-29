@@ -28,26 +28,24 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-      
+          # Cache ist weg, das ist gut so!
 
       - name: Install dependencies
         run: npm install
 
-      - name: Build
-        run: npm run build
-
+      # --- HIER IST DIE ÄNDERUNG ---
       - name: Build directly with Vite
         run: |
           npx vite build --base=/DesignMethodologiesCode/
           touch dist/.nojekyll
-          
+      # -----------------------------
+
       - name: Setup Pages
         uses: actions/configure-pages@v3
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Vite baut standardmäßig in den 'dist' Ordner
           path: './dist'
 
       - name: Deploy to GitHub Pages

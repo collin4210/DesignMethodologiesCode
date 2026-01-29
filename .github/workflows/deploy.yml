@@ -1,8 +1,8 @@
-name: Deploy static content to Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: ['main']
+    branches: ["main"]
   workflow_dispatch:
 
 permissions:
@@ -11,7 +11,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: 'pages'
+  group: "pages"
   cancel-in-progress: true
 
 jobs:
@@ -28,17 +28,23 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          # Cache ist weg, das ist gut so!
 
+      # 1. Wir löschen den alten dist Ordner, damit wir sicher sind
+      - name: Clean old dist
+        run: rm -rf dist
+
+      # 2. Wir installieren alles + Vite explizit (falls es fehlt)
       - name: Install dependencies
-        run: npm install
-
-      # --- HIER IST DIE ÄNDERUNG ---
-      - name: Build directly with Vite
         run: |
-          npx vite build --base=/DesignMethodologiesCode/
+          npm install
+          npm install -D vite
+
+      # 3. Der aggressive Build: Wir ignorieren package.json Skripte
+      # Wir zwingen Output in 'dist' und ignorieren TS-Fehler
+      - name: Force Build
+        run: |
+          npx vite build --base=/DesignMethodologiesCode/ --outDir dist --emptyOutDir
           touch dist/.nojekyll
-      # -----------------------------
 
       - name: Setup Pages
         uses: actions/configure-pages@v3

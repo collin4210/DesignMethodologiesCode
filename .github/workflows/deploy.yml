@@ -36,9 +36,11 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Create .nojekyll to disable Jekyll processing
-        run: touch dist/.nojekyll
-
+      - name: Build directly with Vite
+        run: |
+          npx vite build --base=/DesignMethodologiesCode/
+          touch dist/.nojekyll
+          
       - name: Setup Pages
         uses: actions/configure-pages@v3
 
